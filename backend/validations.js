@@ -21,7 +21,7 @@ export const registerValidation = [
 export const postCreateValidation = [
   body("title", "Введите заголовок статьи").isLength({ min: 3 }).isString(),
   body("text", "Введите текст статьи").isLength({ min: 3 }).isString(),
-  body("tags", "Неверный формат тэгов (укажите строку тэгов через запятую)").optional().isString(),
+  body("tags", "Неверный формат тэгов (укажите строку тэгов через запятую)").optional().isArray(),
   body("imageUrl", "Указан некорректный URL для изображения")
     .optional()
     .isString(),

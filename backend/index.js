@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import multer from "multer";
+import cors from "cors";
 
 import "dotenv/config";
 import {
@@ -9,8 +10,8 @@ import {
   postCreateValidation,
 } from "./validations.js";
 
-import {UserController, PostController} from './controllers/index.js'
-import {checkAuth, handleValidationErrors} from './utils/index.js'
+import { UserController, PostController } from "./controllers/index.js";
+import { checkAuth, handleValidationErrors } from "./utils/index.js";
 
 // connet to mongoDB via mongoose
 mongoose
@@ -37,6 +38,7 @@ const upload = multer({ storage });
 
 //use json to send data
 app.use(express.json());
+app.use(cors()); //use cors to access to backend from frontend
 app.use("/uploads", express.static("uploads"));
 
 app.get("/", (req, res) => {
@@ -72,6 +74,9 @@ app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
 //CRUD
 //get all posts
 app.get("/posts", PostController.getAll);
+//get all tags
+app.get("/tags", PostController.getLastTags);
+app.get("/posts/tags", PostController.getLastTags);
 //get one post
 app.get("/posts/:id", PostController.getOne);
 //create post
